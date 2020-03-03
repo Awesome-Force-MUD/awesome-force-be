@@ -14,8 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+
+from rest_framework import routers
+from tafmudapp.api import PlayerSerializerViewSet
+
+# create a new router for our players
+router = routers.DefaultRouter()
+# register the player endpoint NAME aka URL with our players view set
+router.register('player', PlayerSerializerViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)) # ~~> gives us access to our api/player end point
 ]
+

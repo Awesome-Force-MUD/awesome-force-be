@@ -42,5 +42,5 @@ r_treasure.connectRooms(r_narrow, "s")
 
 players=Player.objects.all()
 for p in players:
-  p.currentRoom=r_outside.id
+  p.players_current_room=r_outside.id
   p.save()

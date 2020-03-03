@@ -12,6 +12,9 @@ class Room(models.Model):               # inherits the models modules from our s
     title = models.CharField(max_length=50, default="This is a default title")
     description = models.CharField(max_length=500, default="This is a default description")
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
     # add directions in order to move from our rooms
     n_to = models.IntegerField(default=0)
     s_to = models.IntegerField(default=0)
@@ -53,9 +56,11 @@ class Room(models.Model):               # inherits the models modules from our s
 # Create a Player Class Model that inherits the models.Model module
 class Player(models.Model):
     # create a radnom uuid for our players
-    player_id = models.UUIDField(default=uuid4, unique=True) 
+    player_id = models.UUIDField(default=uuid4, unique=True)
+    #player name that is unrelatd to player_id
+    player_name = models.CharField(max_length=25, default="Default Name")
     # this creates a user in the adamin site of our django back end/server
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     # will be updated with players current room. begin at zero until told otherwise
     players_current_room = models.IntegerField(default=0)
     # add created at and modified at sections for our players
