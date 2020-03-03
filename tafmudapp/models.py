@@ -58,6 +58,10 @@ class Player(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # will be updated with players current room. begin at zero until told otherwise
     players_current_room = models.IntegerField(default=0)
+    # add created at and modified at sections for our players
+    created_at = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+
 
     # create a Player Method that initializes their current room
     def initialize(self):
