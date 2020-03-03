@@ -42,11 +42,11 @@ class Room(models.Model):               # inherits the models modules from our s
     
     # create a method that creates a player name that will use djangos User module from django.contrib.auth.models
     def playerName(self, currentPlayerName):
-        return [p.user.username for p in Player.objects.filter(currentRoom = self.id) if p.id != int(currentPlayerName)]
+        return [p.user.username for p in Player.objects.filter(players_current_room = self.id) if p.id != int(currentPlayerName)]
 
     # create a player uuid (uuid4 for a random ID) from the uuid module
     def playerID(self, currentPlayerID):
-        return [p.uuid4 for p in Player.objects.filter(currenRoom=self.id) if p.id != int(currentPlayerID)]
+        return [p.uuid4 for p in Player.objects.filter(players_current_room=self.id) if p.id != int(currentPlayerID)]
 
 ###### Current End of Room Class
 
