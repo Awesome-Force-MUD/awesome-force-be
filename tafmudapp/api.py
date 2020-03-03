@@ -21,5 +21,15 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer): # HyperlinkedMod
 # connect our serializer to our Players rows
 class PlayerSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
-    queryset = Player.objects.all()
+    queryset = Player.objects.none()
+
+    def get_queryset(self):
+
+        user = self.request.user
+
+        # check the user that is logged in
+        if user.is_anonymous:
+            return Player.objects.none()
+        else:
+            return Player.objects.filter(user=user)
 
