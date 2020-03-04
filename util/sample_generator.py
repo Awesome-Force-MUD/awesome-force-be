@@ -81,6 +81,8 @@ class World:
 
             # Create a room in the given direction
             room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
+            
+            
             # Note that in Django, you'll need to save the room after you create it
 
             # Save the room in the World grid
@@ -152,9 +154,9 @@ class World:
 
 
 w = World()
-num_rooms = 44
+num_rooms = 150
 width = 8
-height = 7
+height = 20
 w.generate_rooms(width, height, num_rooms)
 w.print_rooms()
 

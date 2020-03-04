@@ -9,7 +9,7 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer): # HyperlinkedMod
         fields = ('player_name', 'players_current_room')
 
     def create(self, validated_data):
-        ### fires up debugger when creating a new object (player)
+        ## fires up debugger when creating a new object (player)
         # import pdb; pdb.set_trace() 
 
         user = self.context['request'].user
@@ -21,15 +21,36 @@ class PlayerSerializer(serializers.HyperlinkedModelSerializer): # HyperlinkedMod
 # connect our serializer to our Players rows
 class PlayerSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
-    queryset = Player.objects.none()
+    queryset = Player.objects.all()
 
-    def get_queryset(self):
+    # def get_queryset(self):
 
-        user = self.request.user
+    #     user = self.request.user
 
         # check the user that is logged in
-        if user.is_anonymous:
-            return Player.objects.none()
-        else:
-            return Player.objects.filter(user=user)
+        # if user.is_anonymous:
+        #     return Player.objects.none()
+        # else:
+        #     return Player.objects.filter(user=user)
 
+# #################################
+# ROOM Serializer
+class RoomSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = Room
+        fields = ('title', 'description')
+
+    # Create a new room
+    def create(self, validated_data):
+        #import pdb; pdb.set_trace() 
+        room = Room.objects.create(**validated_data)
+        return room
+
+
+# connect our serializer to our Room rows
+class RoomSerializerViewSet(viewsets.ModelViewSet):
+    serializer_class = RoomSerializer
+    queryset = Room.objects.all()
+
+    
