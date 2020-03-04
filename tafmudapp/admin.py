@@ -1,9 +1,8 @@
 from django.contrib import admin
-from .models import Player, Room
+from .models import Player, Room, World
 
 # Register your models here.
-# class RoomAdmin(admin.ModelAdmin):
-#     readonly_fields = ("created_at", "last_modified")
 
-admin.site.register(Room, RoomAdmin)
+admin.site.register(Room)
 admin.site.register(Player)
+admin.site.register(World)

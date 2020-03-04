@@ -1,5 +1,5 @@
 from rest_framework import serializers, viewsets
-from .models import Player, Room
+from .models import Player, Room, World
 
 class PlayerSerializer(serializers.HyperlinkedModelSerializer): # HyperlinkedModelSerializer ~> gives us nice links
 
@@ -53,4 +53,22 @@ class RoomSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = RoomSerializer
     queryset = Room.objects.all()
 
-    
+
+# #################################
+# World Serializer
+class WorldSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = World
+        fields = ('room_id')
+
+    # Create a new room
+    def create(self, validated_data):
+        #import pdb; pdb.set_trace() 
+        world = World.objects.create(**validated_data)
+        return world
+
+# connect our serializer to our Room rows
+class WorldSerializerViewSet(viewsets.ModelViewSet):
+    serializer_class = WorldSerializer
+    queryset = World.objects.all()

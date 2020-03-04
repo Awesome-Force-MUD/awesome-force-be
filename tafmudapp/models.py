@@ -11,9 +11,8 @@ from django.dispatch import receiver
 class Room(models.Model):               # inherits the models modules from our sql db connected to django
     title = models.CharField(max_length=50, default="This is a default title")
     description = models.CharField(max_length=500, default="This is a default description")
+    world = models.ForeignKey(, on_delete=models.CASCADE)
 
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # last_modified = models.DateTimeField(auto_now=True)
 
     # add directions in order to move from our rooms
     n_to = models.IntegerField(default=0)
@@ -38,7 +37,7 @@ class Room(models.Model):               # inherits the models modules from our s
             elif direction == "w":
                 self.w_to = destinationRoomID
             else:
-                print(" You entered an invalid direction. Please choose: 'n', 's', 'e', or 'w'. ")
+                # print(" You entered an invalid direction. Please choose: 'n', 's', 'e', or 'w'. ")
                 return
             # Save the current instance
             self.save()
@@ -64,8 +63,7 @@ class Player(models.Model):
     # will be updated with players current room. begin at zero until told otherwise
     players_current_room = models.IntegerField(default=0)
     # add created at and modified at sections for our players
-    # created_at = models.DateTimeField(auto_now_add=True)
-    # last_modified = models.DateTimeField(auto_now=True)
+
 
 
     # create a Player Method that initializes their current room
@@ -84,7 +82,12 @@ class Player(models.Model):
 
 ##### Create a World Model to represent a container for our rooms
 
-class World:
+class World(models.Model):
+    # FK to the room 
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    #room name unrealted to room id
+    # room_name = models.CharField(max_length=25, default="Default Name")
+
     def __init__(self):
         self.grid = None
         self.width = 0
@@ -198,7 +201,7 @@ class World:
         str += "# " * ((3 + self.width * 5) // 2) + "\n"
 
         # Print string
-        print(str)
+        # print(str)
 
 
 w = World()
@@ -206,10 +209,10 @@ num_rooms = 150
 width = 8
 height = 20
 w.generate_rooms(width, height, num_rooms)
-w.print_rooms()
+# w.print_rooms()
 
 
-print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
+# print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
 
 
 
