@@ -15,6 +15,8 @@ router = routers.DefaultRouter()
 router.register('player', PlayerSerializerViewSet)
 # register a room endpoint 
 router.register('room', RoomSerializerViewSet)
+# register a world endpoint
+# router.register('world', )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
