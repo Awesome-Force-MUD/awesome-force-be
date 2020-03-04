@@ -20,8 +20,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'rest_framework.authtoken',
     'rest_framework',
+    'rest_framework.authtoken',
     'tafmudapp',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,13 +112,14 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-# Add the Django REST Framework
+# Add the Django REST Framework config as well as the authentication
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ],
 
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.TokenAuthentication',
-    # )
+    ## This is the built in boiler plate for auth in django
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    )
 }

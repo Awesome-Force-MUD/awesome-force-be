@@ -11,7 +11,7 @@ from django.dispatch import receiver
 class Room(models.Model):               # inherits the models modules from our sql db connected to django
     title = models.CharField(max_length=50, default="This is a default title")
     description = models.CharField(max_length=500, default="This is a default description")
-    world = models.ForeignKey(, on_delete=models.CASCADE)
+    # world = models.ForeignKey(, on_delete=models.CASCADE)
 
 
     # add directions in order to move from our rooms
@@ -26,7 +26,8 @@ class Room(models.Model):               # inherits the models modules from our s
         try:
             destinationRoom = Room.objects.get(id=destinationRoomID)
         except Room.DoesNotExist:
-            print("That room does not exist.")
+            # print("That room does not exist.")
+            return
         else:
             if direction == "n":
                 self.n_to = destinationRoomID

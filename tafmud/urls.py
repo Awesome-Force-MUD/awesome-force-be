@@ -1,9 +1,12 @@
+# END POINTS ARE DEFINED HERE
+
 from django.contrib import admin
 from django.urls import path, include
 
 from rest_framework import routers
 from tafmudapp.api import PlayerSerializerViewSet, RoomSerializerViewSet
 
+# views is the django auth boiler plate given to us
 from rest_framework.authtoken import views
 
 # create a new router for our players
@@ -16,5 +19,6 @@ router.register('room', RoomSerializerViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)), # ~~> gives us access to our api/player end point
-    # path('api-token-auth/', views.obtain_auth_token), # ~~> pass obtain auth token out of views when decalring new path
+    # LOGIN POINT FO FE
+    path('api-token-auth/', views.obtain_auth_token), # ~~> pass obtain auth token out of views when decalring new path
 ]
