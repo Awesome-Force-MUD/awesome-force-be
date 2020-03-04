@@ -6,88 +6,11 @@ from django.dispatch import receiver
 
 
 # Create your models here.
-
-## Room Model
-class Room(models.Model):               # inherits the models modules from our sql db connected to django
-    title = models.CharField(max_length=50, default="This is a default title")
-    description = models.CharField(max_length=500, default="This is a default description")
-    # world = models.ForeignKey(, on_delete=models.CASCADE)
-
-
-    # add directions in order to move from our rooms
-    n_to = models.IntegerField(default=0)
-    s_to = models.IntegerField(default=0)
-    e_to = models.IntegerField(default=0)
-    w_to = models.IntegerField(default=0)
-
-    # define a function that will connect our rooms together
-    def connectRooms(self, destinationRoom, direction):
-        destinationRoomID = destinationRoom.id      # this var will hold the room we are connected to
-        try:
-            destinationRoom = Room.objects.get(id=destinationRoomID)
-        except Room.DoesNotExist:
-            # print("That room does not exist.")
-            return
-        else:
-            if direction == "n":
-                self.n_to = destinationRoomID
-            elif direction == "s":
-                self.s_to = destinationRoomID
-            elif direction == "e":
-                self.e_to = destinationRoomID
-            elif direction == "w":
-                self.w_to = destinationRoomID
-            else:
-                # print(" You entered an invalid direction. Please choose: 'n', 's', 'e', or 'w'. ")
-                return
-            # Save the current instance
-            self.save()
-    
-    # create a method that creates a player name that will use djangos User module from django.contrib.auth.models
-    def playerName(self, currentPlayerName):
-        return [p.user.username for p in Player.objects.filter(players_current_room = self.id) if p.id != int(currentPlayerName)]
-
-    # create a player uuid (uuid4 for a random ID) from the uuid module
-    def playerID(self, currentPlayerID):
-        return [p.uuid4 for p in Player.objects.filter(players_current_room=self.id) if p.id != int(currentPlayerID)]
-
-###### Current End of Room Class
-
-# Create a Player Class Model that inherits the models.Model module
-class Player(models.Model):
-    # create a radnom uuid for our players
-    player_id = models.UUIDField(default=uuid4, unique=True)
-    #player name that is unrelatd to player_id
-    player_name = models.CharField(max_length=25, default="Default Name")
-    # this creates a user in the adamin site of our django back end/server
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    # will be updated with players current room. begin at zero until told otherwise
-    players_current_room = models.IntegerField(default=0)
-    # add created at and modified at sections for our players
-
-
-
-    # create a Player Method that initializes their current room
-    def initialize(self):
-        if self.players_current_room == 0:
-            self.players_current_room = Room.objects.first().id
-            self.save()
-
-    # create a Player method that returns the players current room
-    def room(self):
-        try:
-            return Room.objects.get(id=self.players_current_room)
-        except Room.DoesNotExist:
-            self.initialize()
-            return self.room()
-
 ##### Create a World Model to represent a container for our rooms
-
 class World(models.Model):
-    # FK to the room 
-    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    #room name unrealted to room id
-    # room_name = models.CharField(max_length=25, default="Default Name")
+
+    world_name = models.CharField(max_length=50, default="This is a default title")
+    world_description = models.CharField(max_length=500, default="This is a default description")
 
     def __init__(self):
         self.grid = None
@@ -133,8 +56,6 @@ class World(models.Model):
 
             # Create a room in the given direction
             room = Room(room_count, "A Generic Room", "This is a generic room.", x, y)
-            
-            
             # Note that in Django, you'll need to save the room after you create it
 
             # Save the room in the World grid
@@ -142,13 +63,11 @@ class World(models.Model):
 
             # Connect the new room to the previous room
             if previous_room is not None:
-                previous_room.connectRooms(room, room_direction)
+                previous_room.connect_rooms(room, room_direction)
 
             # Update iteration variables
             previous_room = room
             room_count += 1
-
-
 
     def print_rooms(self):
         '''
@@ -202,14 +121,101 @@ class World(models.Model):
         str += "# " * ((3 + self.width * 5) // 2) + "\n"
 
         # Print string
-        # print(str)
+        print(str)
+
+## Room Model
+class Room(models.Model):               # inherits the models modules from our sql db connected to django
+    # def __init__(self):
+    #     self.id = id
+    #     self.name = name
+    #     self.description = description
+    #     self.n_to = None
+    #     self.s_to = None
+    #     self.e_to = None
+    #     self.w_to = None
+    #     self.x = x
+    #     self.y = y
+
+    title = models.CharField(max_length=50, default="This is a default title")
+    description = models.CharField(max_length=500, default="This is a default description")
+    # world = models.ForeignKey(, on_delete=models.CASCADE)
 
 
-w = World()
-num_rooms = 150
-width = 8
-height = 20
-w.generate_rooms(width, height, num_rooms)
+    # add directions in order to move from our rooms
+    n_to = models.IntegerField(default=0)
+    s_to = models.IntegerField(default=0)
+    e_to = models.IntegerField(default=0)
+    w_to = models.IntegerField(default=0)
+
+    # define a function that will connect our rooms together
+    def connectRooms(self, destinationRoom, direction):
+        destinationRoomID = destinationRoom.id      # this var will hold the room we are connected to
+        try:
+            destinationRoom = Room.objects.get(id=destinationRoomID)
+        except Room.DoesNotExist:
+            # print("That room does not exist.")
+            return
+        else:
+            if direction == "n":
+                self.n_to = destinationRoomID
+            elif direction == "s":
+                self.s_to = destinationRoomID
+            elif direction == "e":
+                self.e_to = destinationRoomID
+            elif direction == "w":
+                self.w_to = destinationRoomID
+            else:
+                print(" You entered an invalid direction. Please choose: 'n', 's', 'e', or 'w'. ")
+                return
+            # Save the current instance
+            self.save()
+    
+    # create a method that creates a player name that will use djangos User module from django.contrib.auth.models
+    def playerName(self, currentPlayerName):
+        return [p.user.username for p in Player.objects.filter(players_current_room = self.id) if p.id != int(currentPlayerName)]
+
+    # create a player uuid (uuid4 for a random ID) from the uuid module
+    def playerID(self, currentPlayerID):
+        return [p.uuid4 for p in Player.objects.filter(players_current_room=self.id) if p.id != int(currentPlayerID)]
+
+###### Current End of Room Class
+
+# Create a Player Class Model that inherits the models.Model module
+class Player(models.Model):
+    # create a radnom uuid for our players
+    player_id = models.UUIDField(default=uuid4, unique=True)
+    #player name that is unrelatd to player_id
+    player_name = models.CharField(max_length=25, default="Default Name")
+    # this creates a user in the adamin site of our django back end/server
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # will be updated with players current room. begin at zero until told otherwise
+    players_current_room = models.IntegerField(default=0)
+    # add created at and modified at sections for our players
+
+
+
+    # create a Player Method that initializes their current room
+    def initialize(self):
+        if self.players_current_room == 0:
+            self.players_current_room = Room.objects.first().id
+            self.save()
+
+    # create a Player method that returns the players current room
+    def room(self):
+        try:
+            return Room.objects.get(id=self.players_current_room)
+        except Room.DoesNotExist:
+            self.initialize()
+            return self.room()
+
+
+
+
+# w = World()
+# num_rooms = 150
+# width = 8
+# height = 20
+# w.generate_rooms(width, height, num_rooms)
 # w.print_rooms()
 
 
