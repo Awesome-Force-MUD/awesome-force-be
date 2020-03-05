@@ -176,23 +176,6 @@ w.generate_rooms(width, height, num_rooms)
 
 # print(f"\n\nWorld\n  height: {height}\n  width: {width},\n  num_rooms: {num_rooms}\n")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ####################### Look Into receivers
 
 # @receiver(post_save, sender=User)
