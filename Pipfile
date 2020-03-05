@@ -13,7 +13,9 @@ python-decouple = "*"
 gunicorn = "*"  
 django-heroku = "*"
 django-rest-api = "*"
-
+dj-database-url = "*"
+whitenoise = "*"
+corsheaders = "*"
 
 [requires]
 python_version = "3.8"
