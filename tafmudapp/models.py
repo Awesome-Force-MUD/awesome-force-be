@@ -1,3 +1,5 @@
+# from django.conf import settings
+# settings.configure()
 from django.db import models
 from uuid import uuid4
 from django.contrib.auth.models import User
@@ -15,6 +17,7 @@ class World(models.Model):
     # adding rooms should increase the default by 1 each time
     width = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
+
 
     # create a method to generate rooms automatically
     def generate_rooms(self, size_x, size_y, num_rooms):
@@ -87,10 +90,10 @@ class Room(models.Model):               # inherits the models modules from our s
     #     self.w_to = None
     #     self.x = x
     #     self.y = y
-
+    loc_x = models.IntegerField(default=0)
+    loc_y = models.IntegerField(default=0)
     title = models.CharField(max_length=50, default="This is a default title")
     description = models.CharField(max_length=500, default="This is a default description")
-    # world = models.ForeignKey(, on_delete=models.CASCADE)
 
 
     # add directions in order to move from our rooms
