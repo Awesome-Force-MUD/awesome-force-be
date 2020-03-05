@@ -42,35 +42,51 @@ for _ in range(150):
     r_inst = Room.objects.all().order_by("?").first()
     if r_inst.n_to == 0:
         # TODO update titles and desc to random
+        if r_inst.loc_y == 254:
+            print(r_inst.loc_y)
+            continue
         new_room = Room(title="North Title", description="North Desc")
+        new_room.loc_y = r_inst.loc_y + 1
+        new_room.loc_x = r_inst.loc_x
         new_room.save()
         r_inst.connectRooms(new_room, "n")
         new_room.connectRooms(r_inst, "s")
-        new_room.loc_y = r_inst.loc_y + 1
     # continue 
     elif r_inst.s_to == 0:
         # TODO update titles and desc to random
+        if r_inst.loc_y == 20:
+            print(r_inst.loc_y)
+            continue
         new_room = Room(title="South Title", description="South Desc")
+        new_room.loc_y = r_inst.loc_y - 1
+        new_room.loc_x = r_inst.loc_x
         new_room.save()
         r_inst.connectRooms(new_room, "s")
         new_room.connectRooms(r_inst, "n")
-        new_room.loc_y = r_inst.loc_y - 1
     # continue
     elif r_inst.e_to == 0:
+        if r_inst.loc_x == 120:
+            print(r_inst.loc_x)
+            continue
         # TODO update titles and desc to random
         new_room = Room(title="East Title", description="East Desc")
+        new_room.loc_x = r_inst.loc_x + 1
+        new_room.loc_y = r_inst.loc_y
         new_room.save()
         r_inst.connectRooms(new_room, "e")
         new_room.connectRooms(r_inst, "w")
-        new_room.loc_x = r_inst.loc_x + 1
     # continue
     elif r_inst.w_to == 0:
         # TODO update titles and desc to random
+        if r_inst.loc_x == 20:
+            print(r_inst.loc_x)
+            continue
         new_room = Room(title="West Title", description="West Desc")
+        new_room.loc_x = r_inst.loc_x - 1
+        new_room.loc_y = r_inst.loc_y
         new_room.save()
         r_inst.connectRooms(new_room, "w")
         new_room.connectRooms(r_inst, "e")
-        new_room.loc_x = r_inst.loc_x - 1
     # continue
 # new rooms must be adjacent to each other
 # if room pulled has an available direction we create a room in that direction.
