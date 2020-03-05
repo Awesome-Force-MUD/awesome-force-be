@@ -1,1 +1,1 @@
-web: gunicorn tafmud.wsgi:application --log-file -
+web: gunicorn tafmudapp.wsgi:application --log-file -
