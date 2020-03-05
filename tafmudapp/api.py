@@ -39,7 +39,7 @@ class RoomSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Room
-        fields = ('title', 'description')
+        fields = ('title', 'description', 'n_to', 's_to', 'e_to', 'w_to', 'loc_x', 'loc_y')
 
     # Create a new room
     def create(self, validated_data):
