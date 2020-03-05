@@ -1,0 +1,1 @@
+web: gunicorn tafmud.wsgi:application --log-file -
