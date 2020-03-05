@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tafmudapp',
-    'api',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -84,7 +83,7 @@ DATABASES = {
     'default': dj_database_url.config(default=config('DATABASE_URL'), conn_max_age=600)
 }
 
-#### For running locally on sqlite studio
+#### For running locally on sqlite studio ####
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -132,9 +131,9 @@ USE_TZ = True
 
 # Add the Django REST Framework config as well as the authentication
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    # ],
 
     ## This is the built in boiler plate for authorization in django
     'DEFAULT_AUTHENTICATION_CLASSES': (

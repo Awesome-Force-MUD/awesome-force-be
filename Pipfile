@@ -15,7 +15,9 @@ django-heroku = "*"
 django-rest-api = "*"
 dj-database-url = "*"
 whitenoise = "*"
-corsheaders = "*"
+django-cors-headers = "*"
+django-rest-auth = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.8"
