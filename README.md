@@ -1,5 +1,7 @@
 ## Team Awesome Force MUD Application
 
+
+
 ### Meet the Team
 
 > Back End Dango Engineers
@@ -25,7 +27,7 @@
 >
 > Registered players will start in the middle of the map and begin moving their way out of the map using the directions North, South, East, West.
 
-
+------
 
 ## Endpoints
 
@@ -56,3 +58,21 @@
 >  ]
 > ```
 
+### Player Endpoints
+
+> ```json
+> [
+>     {
+>         "player_name": "navos Player",
+>         "players_current_room": 42
+>     },
+>     {
+>         "player_name": "bens player",
+>         "players_current_room": 42
+>     },
+>     {
+>         "player_name": "freds player",
+>         "players_current_room": 42
+>     }
+> ]
+> ```
