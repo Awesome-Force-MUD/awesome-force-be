@@ -23,10 +23,10 @@ class PlayerSerializerViewSet(viewsets.ModelViewSet):
     serializer_class = PlayerSerializer
     queryset = Player.objects.all()
 
+
+    ## This can be used to test if a user is logged in ##
     # def get_queryset(self):
-
     #     user = self.request.user
-
         # check the user that is logged in
         # if user.is_anonymous:
         #     return Player.objects.none()

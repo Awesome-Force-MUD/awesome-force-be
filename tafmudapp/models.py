@@ -79,17 +79,8 @@ class World(models.Model):
 
 
 ## Room Model
-class Room(models.Model):               # inherits the models modules from our sql db connected to django
-    # def __init__(self):
-    #     self.id = id
-    #     self.name = name
-    #     self.description = description
-    #     self.n_to = None
-    #     self.s_to = None
-    #     self.e_to = None
-    #     self.w_to = None
-    #     self.x = x
-    #     self.y = y
+class Room(models.Model):    # inherits the models modules from our sql db connected to django
+
     loc_x = models.IntegerField(default=0)
     loc_y = models.IntegerField(default=0)
     title = models.CharField(max_length=50, default="This is a default title")

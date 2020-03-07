@@ -15,6 +15,8 @@ router = routers.DefaultRouter()
 router.register('player', PlayerSerializerViewSet)
 # register a room endpoint 
 router.register('room', RoomSerializerViewSet)
+
+# router.register('api-token-auth/', views.obtain_auth_token)
 # register a world endpoint
 # router.register('world', )
 
